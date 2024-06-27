@@ -44,7 +44,7 @@ export function secondaryDatabase(databaseConnection: DatabaseConnectionType) {
   });
 }
 
-export async function DatabaseListenStart({
+export async function databaseListenStart({
   primaryClient,
   secondaryClient,
   listenChannelName,

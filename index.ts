@@ -1,5 +1,5 @@
 import { serverLaunch, keepAliveServer } from "./functions/server";
-import { scrapingDatabase, productionDatabase, primaryDatabase, secondaryDatabase, DatabaseListenStart } from "./functions/databases";
+import { scrapingDatabase, productionDatabase, primaryDatabase, secondaryDatabase, databaseListenStart } from "./functions/databases";
 
 // Webサーバーを起動する
 serverLaunch();
@@ -13,7 +13,7 @@ serverLaunch();
 async function replicateScrapingToProduction() {
   const primaryClient = primaryDatabase(scrapingDatabase);
   const secoundaryClient = secondaryDatabase(productionDatabase);
-  await DatabaseListenStart({
+  await databaseListenStart({
     primaryClient: primaryClient,
     secondaryClient: secoundaryClient,
     listenChannelName: "replication_scraping_to_production",
@@ -23,7 +23,7 @@ async function replicateScrapingToProduction() {
 async function replicateProductionToScraping() {
   const primaryClient = primaryDatabase(productionDatabase);
   const secoundaryClient = secondaryDatabase(scrapingDatabase);
-  await DatabaseListenStart({
+  await databaseListenStart({
     primaryClient: primaryClient,
     secondaryClient: secoundaryClient,
     listenChannelName: "replication_production_to_scraping",
