@@ -25,6 +25,8 @@ npx ts-node index.ts
 
 指定したチャンネルに向けて `NOTIFY` クエリが実行されると同期開始です。
 
+なお、コピー元（primary）のテーブルには `replicate_status` というカラムを text 型で用意しておいてください。default 値は `pending` としておきましょう。このカラムを使って同期状態を管理します。同期先（secoundary）テーブルでは `replicate_status` は不要です。
+
 ## 想定する利用シーン
 
 - スクレイピング後データ処理した結果だけを本番 DB に同期したい。
