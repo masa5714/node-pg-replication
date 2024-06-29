@@ -21,8 +21,8 @@ export class Replication {
 
   async hasTableChecker(tableName: string) {
     const [primaryClient, secoundaryClient] = await Promise.all([
-      this.primaryClient.raw(`SELECT to_regclass('public.${tableName}') IS NOT NULL AS exists`),
-      this.secoundaryClient.raw(`SELECT to_regclass('public.${tableName}') IS NOT NULL AS exists`),
+      this.primaryClient.raw(`SELECT to_regclass(?) IS NOT NULL AS exists`, [`public.${tableName}`]),
+      this.secoundaryClient.raw(`SELECT to_regclass(?) IS NOT NULL AS exists`, [`public.${tableName}`]),
     ]);
 
     if (primaryClient.rows[0].exists && secoundaryClient.rows[0].exists) {
